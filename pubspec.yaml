@@ -1,0 +1,41 @@
+name: numbers_trivia
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # Service locator
+  get_it: ^2.0.1
+  # Bloc for state management
+  flutter_bloc: ^6.0.0
+  # Value equality
+  equatable: ^1.2.0
+  # Functional programming thingies
+  dartz: ^0.8.6
+  # Remote API
+  # connectivity: ^0.4.3+7
+  # 'connectivity' package is not working purely, so instead we're using 'data_connection_checker'.
+  # It's platform independent and should run well even with Flutter for web:
+  data_connection_checker: ^0.3.4
+  http: ^0.12.0+2
+  # Local cache
+  shared_preferences: ^0.5.3+4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^4.1.0
+
+# The following section is specific to Flutter.
+flutter:
+  uses-material-design: true
+
