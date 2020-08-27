@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:numbers_trivia/core/constants.dart';
 import 'package:numbers_trivia/core/error/exceptions.dart';
+import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_db.dart';
 import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_local_datasource.dart';
 import 'package:numbers_trivia/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/entities/number_trivia.dart';
@@ -13,15 +15,17 @@ import 'package:matcher/matcher.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
-class MockDao extends Mock implements Dao {}
+class MockDao extends Mock implements NumberTriviaDao {}
 
 void main() {
   NumberTriviaLocalDataSourceImpl dataSource;
   MockSharedPreferences mockSharedPreferences;
+  MockDao dao;
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
-    dataSource = NumberTriviaLocalDataSourceImpl(sharedPreferences: mockSharedPreferences);
+    dao = MockDao();
+    dataSource = NumberTriviaLocalDataSourceImpl(sharedPreferences: mockSharedPreferences, dao: dao);
   });
 
   group('getLastNumberTrivia', () {
@@ -57,17 +61,42 @@ void main() {
   });
 
   group('addToFavourites', () {
-    //setUp(body)
     final tNumber = 1;
-    final tNumberTriviaModel = NumberTriviaModel(number: tNumber, text: 'test trivia');
-    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
+    final dbTriviaEntity = FavouriteTrivia(id: 1, triviaNumber: tNumber, triviaText: 'test trivia');
 
     test('should return trivia number back when adding it to favourites', () async {
       //arrange
-      when(dataSource.insertFavouriteNumberTrivia()).thenAnswer((_) async => tNumber);
+      when(dataSource.insertFavouriteNumberTrivia(any)).thenAnswer((_) async => tNumber);
       //act
-      //final result = await
+      final result = await dataSource.insertFavouriteNumberTrivia(dbTriviaEntity);
       //assert
+      verify(dao.insertFavouriteNumberTrivia(dbTriviaEntity));
+      expect(result, equals(tNumber));
+    });
+  });
+
+  group('deleteFromFavourites', () {
+    final dislikedTriviaEntity = FavouriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia');
+    final favTriviaEntity = FavouriteTrivia(id: 2, triviaNumber: 2, triviaText: 'Test Trivia 2');
+    final resultList = List<FavouriteTrivia>();
+    resultList.add(favTriviaEntity);
+
+    test('should not find trivia which was deleted from favourites', () async {
+      //arrange
+      when(dataSource.getAllFavouriteNumberTrivias()).thenAnswer((_) async => resultList);
+      when(dataSource.deleteFavouriteNumberTrivia(any)).thenAnswer((_) async => {});
+      //act
+      await dataSource.insertFavouriteNumberTrivia(favTriviaEntity);
+      await dataSource.insertFavouriteNumberTrivia(dislikedTriviaEntity);
+      await dataSource.deleteFavouriteNumberTrivia(dislikedTriviaEntity);
+      final listResult = await dataSource.getAllFavouriteNumberTrivias();
+      //assert
+      verify(dao.insertFavouriteNumberTrivia(favTriviaEntity));
+      verify(dao.insertFavouriteNumberTrivia(dislikedTriviaEntity));
+      verify(dao.deleteFavouriteNumberTrivia(dislikedTriviaEntity));
+      verify(dao.getAllFavouriteNumberTrivias());
+      expect(listResult.length, 1);
+      expect(listResult, equals(resultList));
     });
   });
 }

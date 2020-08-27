@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:numbers_trivia/core/constants.dart';
 import 'package:numbers_trivia/core/error/exceptions.dart';
+import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_db.dart';
 import 'package:numbers_trivia/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,15 +13,16 @@ abstract class NumberTriviaLocalDataSource {
   Future<void> cacheNumberTrivia(NumberTriviaModel model);
 
   //For local DB cache
-  Future<List<NumberTriviaModel>> getAllFavouriteNUmberTrivias();
-  Future<int> insertFavouriteNumberTrivia();
-  Future deleteFavouriteNumberTrivia();
+  Future<List<FavouriteTrivia>> getAllFavouriteNumberTrivias();
+  Future<int> insertFavouriteNumberTrivia(FavouriteTrivia trivia);
+  Future deleteFavouriteNumberTrivia(FavouriteTrivia trivia);
 }
 
 class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   final SharedPreferences sharedPreferences;
+  final NumberTriviaDao dao;
 
-  NumberTriviaLocalDataSourceImpl({@required this.sharedPreferences});
+  NumberTriviaLocalDataSourceImpl({@required this.sharedPreferences, @required this.dao});
 
   @override
   Future<NumberTriviaModel> getLastNumberTrivia() {
@@ -39,20 +41,17 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   }
 
   @override
-  Future deleteFavouriteNumberTrivia() {
-    // TODO: implement deleteFavouriteNumberTrivia
-    throw UnimplementedError();
+  Future<int> insertFavouriteNumberTrivia(FavouriteTrivia trivia) async {
+    return await dao.insertFavouriteNumberTrivia(trivia);
   }
 
   @override
-  Future<List<NumberTriviaModel>> getAllFavouriteNUmberTrivias() {
-    // TODO: implement getAllFavouriteNUmberTrivias
-    throw UnimplementedError();
+  Future deleteFavouriteNumberTrivia(FavouriteTrivia trivia) async {
+    return await dao.deleteFavouriteNumberTrivia(trivia);
   }
 
   @override
-  Future<int> insertFavouriteNumberTrivia() {
-    // TODO: implement insertFavouriteNumberTrivia
-    throw UnimplementedError();
+  Future<List<FavouriteTrivia>> getAllFavouriteNumberTrivias() async {
+    return await dao.getAllFavouriteNumberTrivias();
   }
 }
