@@ -75,7 +75,7 @@ void main() {
         expect(result, equals(Right(tNumberTrivia)));
       });
 
-      test('should cahche data locally when the call to the remote data source is successful', () async {
+      test('should cache data locally when the call to the remote data source is successful', () async {
         //arrange
         when(mockRemoteDatasource.getConcreteNumberTrivia(any)).thenAnswer((_) async => tNumberTriviaModel);
         //act

@@ -6,11 +6,14 @@ import 'package:numbers_trivia/core/constants.dart';
 import 'package:numbers_trivia/core/error/exceptions.dart';
 import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_local_datasource.dart';
 import 'package:numbers_trivia/features/number_trivia/data/models/number_trivia_model.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../fixtures/fixture_reader.dart';
 import 'package:matcher/matcher.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
+
+class MockDao extends Mock implements Dao {}
 
 void main() {
   NumberTriviaLocalDataSourceImpl dataSource;
@@ -50,6 +53,21 @@ void main() {
       //assert
       final expectedJsonString = json.encode(tNumberTriviaModel.toJson());
       verify(mockSharedPreferences.setString(SHARED_PREFS_CACHED_NUMBER_TRIVIA_STR, expectedJsonString));
+    });
+  });
+
+  group('addToFavourites', () {
+    //setUp(body)
+    final tNumber = 1;
+    final tNumberTriviaModel = NumberTriviaModel(number: tNumber, text: 'test trivia');
+    final NumberTrivia tNumberTrivia = tNumberTriviaModel;
+
+    test('should return trivia number back when adding it to favourites', () async {
+      //arrange
+      when(dataSource.insertFavouriteNumberTrivia()).thenAnswer((_) async => tNumber);
+      //act
+      //final result = await
+      //assert
     });
   });
 }

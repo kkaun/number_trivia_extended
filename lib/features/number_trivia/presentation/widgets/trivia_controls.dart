@@ -62,7 +62,10 @@ class _TriviaControlsState extends State<TriviaControls> {
               },
             ))
           ],
-        )
+        ),
+        SizedBox(
+          height: 30,
+        ),
       ],
     );
   }
