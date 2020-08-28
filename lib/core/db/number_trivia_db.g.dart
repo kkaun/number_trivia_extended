@@ -7,21 +7,21 @@ part of 'number_trivia_db.dart';
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class FavouriteTrivia extends DataClass implements Insertable<FavouriteTrivia> {
+class FavoriteTrivia extends DataClass implements Insertable<FavoriteTrivia> {
   final int id;
   final int triviaNumber;
   final String triviaText;
-  FavouriteTrivia(
+  FavoriteTrivia(
       {@required this.id,
       @required this.triviaNumber,
       @required this.triviaText});
-  factory FavouriteTrivia.fromData(
+  factory FavoriteTrivia.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    return FavouriteTrivia(
+    return FavoriteTrivia(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       triviaNumber: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}trivia_number']),
@@ -44,8 +44,8 @@ class FavouriteTrivia extends DataClass implements Insertable<FavouriteTrivia> {
     return map;
   }
 
-  FavouriteTriviasCompanion toCompanion(bool nullToAbsent) {
-    return FavouriteTriviasCompanion(
+  FavoriteTriviasCompanion toCompanion(bool nullToAbsent) {
+    return FavoriteTriviasCompanion(
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       triviaNumber: triviaNumber == null && nullToAbsent
           ? const Value.absent()
@@ -56,10 +56,10 @@ class FavouriteTrivia extends DataClass implements Insertable<FavouriteTrivia> {
     );
   }
 
-  factory FavouriteTrivia.fromJson(Map<String, dynamic> json,
+  factory FavoriteTrivia.fromJson(Map<String, dynamic> json,
       {ValueSerializer serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return FavouriteTrivia(
+    return FavoriteTrivia(
       id: serializer.fromJson<int>(json['id']),
       triviaNumber: serializer.fromJson<int>(json['triviaNumber']),
       triviaText: serializer.fromJson<String>(json['triviaText']),
@@ -75,15 +75,15 @@ class FavouriteTrivia extends DataClass implements Insertable<FavouriteTrivia> {
     };
   }
 
-  FavouriteTrivia copyWith({int id, int triviaNumber, String triviaText}) =>
-      FavouriteTrivia(
+  FavoriteTrivia copyWith({int id, int triviaNumber, String triviaText}) =>
+      FavoriteTrivia(
         id: id ?? this.id,
         triviaNumber: triviaNumber ?? this.triviaNumber,
         triviaText: triviaText ?? this.triviaText,
       );
   @override
   String toString() {
-    return (StringBuffer('FavouriteTrivia(')
+    return (StringBuffer('FavoriteTrivia(')
           ..write('id: $id, ')
           ..write('triviaNumber: $triviaNumber, ')
           ..write('triviaText: $triviaText')
@@ -97,28 +97,28 @@ class FavouriteTrivia extends DataClass implements Insertable<FavouriteTrivia> {
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
-      (other is FavouriteTrivia &&
+      (other is FavoriteTrivia &&
           other.id == this.id &&
           other.triviaNumber == this.triviaNumber &&
           other.triviaText == this.triviaText);
 }
 
-class FavouriteTriviasCompanion extends UpdateCompanion<FavouriteTrivia> {
+class FavoriteTriviasCompanion extends UpdateCompanion<FavoriteTrivia> {
   final Value<int> id;
   final Value<int> triviaNumber;
   final Value<String> triviaText;
-  const FavouriteTriviasCompanion({
+  const FavoriteTriviasCompanion({
     this.id = const Value.absent(),
     this.triviaNumber = const Value.absent(),
     this.triviaText = const Value.absent(),
   });
-  FavouriteTriviasCompanion.insert({
+  FavoriteTriviasCompanion.insert({
     this.id = const Value.absent(),
     @required int triviaNumber,
     @required String triviaText,
   })  : triviaNumber = Value(triviaNumber),
         triviaText = Value(triviaText);
-  static Insertable<FavouriteTrivia> custom({
+  static Insertable<FavoriteTrivia> custom({
     Expression<int> id,
     Expression<int> triviaNumber,
     Expression<String> triviaText,
@@ -130,9 +130,9 @@ class FavouriteTriviasCompanion extends UpdateCompanion<FavouriteTrivia> {
     });
   }
 
-  FavouriteTriviasCompanion copyWith(
+  FavoriteTriviasCompanion copyWith(
       {Value<int> id, Value<int> triviaNumber, Value<String> triviaText}) {
-    return FavouriteTriviasCompanion(
+    return FavoriteTriviasCompanion(
       id: id ?? this.id,
       triviaNumber: triviaNumber ?? this.triviaNumber,
       triviaText: triviaText ?? this.triviaText,
@@ -156,7 +156,7 @@ class FavouriteTriviasCompanion extends UpdateCompanion<FavouriteTrivia> {
 
   @override
   String toString() {
-    return (StringBuffer('FavouriteTriviasCompanion(')
+    return (StringBuffer('FavoriteTriviasCompanion(')
           ..write('id: $id, ')
           ..write('triviaNumber: $triviaNumber, ')
           ..write('triviaText: $triviaText')
@@ -165,11 +165,11 @@ class FavouriteTriviasCompanion extends UpdateCompanion<FavouriteTrivia> {
   }
 }
 
-class $FavouriteTriviasTable extends FavouriteTrivias
-    with TableInfo<$FavouriteTriviasTable, FavouriteTrivia> {
+class $FavoriteTriviasTable extends FavoriteTrivias
+    with TableInfo<$FavoriteTriviasTable, FavoriteTrivia> {
   final GeneratedDatabase _db;
   final String _alias;
-  $FavouriteTriviasTable(this._db, [this._alias]);
+  $FavoriteTriviasTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   GeneratedIntColumn _id;
   @override
@@ -205,13 +205,13 @@ class $FavouriteTriviasTable extends FavouriteTrivias
   @override
   List<GeneratedColumn> get $columns => [id, triviaNumber, triviaText];
   @override
-  $FavouriteTriviasTable get asDslTable => this;
+  $FavoriteTriviasTable get asDslTable => this;
   @override
-  String get $tableName => _alias ?? 'favourite_trivias';
+  String get $tableName => _alias ?? 'favorite_trivias';
   @override
-  final String actualTableName = 'favourite_trivias';
+  final String actualTableName = 'favorite_trivias';
   @override
-  VerificationContext validateIntegrity(Insertable<FavouriteTrivia> instance,
+  VerificationContext validateIntegrity(Insertable<FavoriteTrivia> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -240,29 +240,29 @@ class $FavouriteTriviasTable extends FavouriteTrivias
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  FavouriteTrivia map(Map<String, dynamic> data, {String tablePrefix}) {
+  FavoriteTrivia map(Map<String, dynamic> data, {String tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return FavouriteTrivia.fromData(data, _db, prefix: effectivePrefix);
+    return FavoriteTrivia.fromData(data, _db, prefix: effectivePrefix);
   }
 
   @override
-  $FavouriteTriviasTable createAlias(String alias) {
-    return $FavouriteTriviasTable(_db, alias);
+  $FavoriteTriviasTable createAlias(String alias) {
+    return $FavoriteTriviasTable(_db, alias);
   }
 }
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $FavouriteTriviasTable _favouriteTrivias;
-  $FavouriteTriviasTable get favouriteTrivias =>
-      _favouriteTrivias ??= $FavouriteTriviasTable(this);
+  $FavoriteTriviasTable _favoriteTrivias;
+  $FavoriteTriviasTable get favoriteTrivias =>
+      _favoriteTrivias ??= $FavoriteTriviasTable(this);
   NumberTriviaDao _numberTriviaDao;
   NumberTriviaDao get numberTriviaDao =>
       _numberTriviaDao ??= NumberTriviaDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [favouriteTrivias];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [favoriteTrivias];
 }
 
 // **************************************************************************
@@ -270,6 +270,5 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 // **************************************************************************
 
 mixin _$NumberTriviaDaoMixin on DatabaseAccessor<AppDatabase> {
-  $FavouriteTriviasTable get favouriteTrivias =>
-      attachedDatabase.favouriteTrivias;
+  $FavoriteTriviasTable get favoriteTrivias => attachedDatabase.favoriteTrivias;
 }

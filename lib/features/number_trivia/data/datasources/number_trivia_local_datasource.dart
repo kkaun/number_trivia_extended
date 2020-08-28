@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:numbers_trivia/core/constants.dart';
+import 'package:numbers_trivia/core/db/number_trivia_db.dart';
 import 'package:numbers_trivia/core/error/exceptions.dart';
-import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_db.dart';
 import 'package:numbers_trivia/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,9 +13,9 @@ abstract class NumberTriviaLocalDataSource {
   Future<void> cacheNumberTrivia(NumberTriviaModel model);
 
   //For local DB cache
-  Future<List<FavouriteTrivia>> getAllFavouriteNumberTrivias();
-  Future<int> insertFavouriteNumberTrivia(FavouriteTrivia trivia);
-  Future deleteFavouriteNumberTrivia(FavouriteTrivia trivia);
+  Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias();
+  Future<int> insertFavoriteNumberTrivia(FavoriteTrivia trivia);
+  Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia);
 }
 
 class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
@@ -41,17 +41,17 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   }
 
   @override
-  Future<int> insertFavouriteNumberTrivia(FavouriteTrivia trivia) async {
-    return await dao.insertFavouriteNumberTrivia(trivia);
+  Future<int> insertFavoriteNumberTrivia(FavoriteTrivia trivia) async {
+    return await dao.insertFavoriteNumberTrivia(trivia);
   }
 
   @override
-  Future deleteFavouriteNumberTrivia(FavouriteTrivia trivia) async {
-    return await dao.deleteFavouriteNumberTrivia(trivia);
+  Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia) async {
+    return await dao.deleteFavoriteNumberTrivia(trivia);
   }
 
   @override
-  Future<List<FavouriteTrivia>> getAllFavouriteNumberTrivias() async {
-    return await dao.getAllFavouriteNumberTrivias();
+  Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() async {
+    return await dao.getAllFavoriteNumberTrivias();
   }
 }
