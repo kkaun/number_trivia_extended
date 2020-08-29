@@ -73,6 +73,14 @@ void main() {
       verify(dao.insertFavoriteNumberTrivia(dbTriviaModel));
       expect(result, equals(tNumber));
     });
+
+    test('should be able to store several favourite trivias with same numbers (but with different texts)', () async {
+      //arrange
+      //TODO
+      //act
+
+      //assert
+    });
   });
 
   group('deleteFromFavorites', () {
