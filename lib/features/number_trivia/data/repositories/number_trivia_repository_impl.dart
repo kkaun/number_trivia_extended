@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:numbers_trivia/core/db/number_trivia_db.dart';
 import 'package:numbers_trivia/core/error/exceptions.dart';
 import 'package:numbers_trivia/core/network/network_info.dart';
 import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_local_datasource.dart';
@@ -45,5 +46,24 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
         return Left(CacheFailure());
       }
     }
+  }
+
+  @override
+  Future<Either<Failure, int>> insertFavoriteNumberTrivia(NumberTrivia trivia) async {
+    try {
+      return Right(await localDataSource.insertFavoriteNumberTrivia(trivia));
+    } on Error {
+      return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() async {
+    return await localDataSource.getAllFavoriteNumberTrivias();
+  }
+
+  @override
+  Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia) async {
+    return await localDataSource.deleteFavoriteNumberTrivia(trivia);
   }
 }

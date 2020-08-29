@@ -1,13 +1,8 @@
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:numbers_trivia/features/number_trivia/data/models/number_trivia_model.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/entities/favorite_trivia.dart';
 
 part 'number_trivia_db.g.dart';
-
-class FavoriteTrivias extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  IntColumn get triviaNumber => integer()();
-  TextColumn get triviaText => text().withLength(min: 1, max: 700)();
-}
 
 @UseMoor(tables: [FavoriteTrivias], daos: [NumberTriviaDao])
 class AppDatabase extends _$AppDatabase {
@@ -23,17 +18,11 @@ class NumberTriviaDao extends DatabaseAccessor<AppDatabase> with _$NumberTriviaD
 
   NumberTriviaDao(this.db) : super(db);
 
+  Future<int> insertFavoriteNumberTrivia(NumberTriviaModel model) {
+    final converted = FavoriteTrivia(id: null, triviaNumber: model.number, triviaText: model.text);
+    return into(favoriteTrivias).insert(converted);
+  }
+
   Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() => select(favoriteTrivias).get();
-  Future<int> insertFavoriteNumberTrivia(FavoriteTrivia trivia) => into(favoriteTrivias).insert(trivia);
   Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia) => delete(favoriteTrivias).delete(trivia);
-}
-
-class TriviaModelToEntityConverter {
-  FavoriteTrivia convertModelToNewFavTriviaEntity(NumberTriviaModel model) {
-    return FavoriteTrivia(triviaNumber: model.number, triviaText: model.text);
-  }
-
-  NumberTriviaModel convertExistingFavTriviaEntityToModel(FavoriteTrivia trivia) {
-    return NumberTriviaModel(number: trivia.triviaNumber, text: trivia.triviaText);
-  }
 }
