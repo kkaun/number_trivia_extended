@@ -25,4 +25,8 @@ class NumberTriviaDao extends DatabaseAccessor<AppDatabase> with _$NumberTriviaD
 
   Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() => select(favoriteTrivias).get();
   Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia) => delete(favoriteTrivias).delete(trivia);
+
+  Future<FavoriteTrivia> getById(int id) {
+    return (select(favoriteTrivias)..where((favTrivia) => favTrivia.id.equals(id))).getSingle();
+  }
 }

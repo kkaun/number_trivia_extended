@@ -4,10 +4,10 @@ import 'package:dartz/dartz.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/usecase.dart';
 
-class GetAllFavoriteTrivias implements UseCase<List<FavoriteTrivia>, NoParams> {
+class GetAllFavoriteTriviasUseCase implements UseCase<List<FavoriteTrivia>, NoParams> {
   final NumberTriviaRepository repository;
 
-  GetAllFavoriteTrivias(this.repository);
+  GetAllFavoriteTriviasUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<FavoriteTrivia>>> execute(NoParams noParams) async {

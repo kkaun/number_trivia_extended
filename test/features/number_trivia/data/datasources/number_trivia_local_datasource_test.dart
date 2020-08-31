@@ -62,95 +62,94 @@ void main() {
 
   group('addToFavorites', () {
     final tNumber = 1;
-    final dbTriviaModel = NumberTriviaModel(number: tNumber, text: 'test trivia');
+    final tDBTriviaModel = NumberTriviaModel(number: tNumber, text: 'test trivia');
 
     final Function eq = const ListEquality().equals;
-    final favTriviaModel1 = NumberTriviaModel(number: 1, text: 'test trivia for 1');
-    final favTriviaModel2 = NumberTriviaModel(number: 1, text: 'another test trivia  for 1');
-    final favTriviaEntity1 = FavoriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia for 1');
-    final favTriviaEntity2 = FavoriteTrivia(id: 2, triviaNumber: 1, triviaText: 'another test trivia  for 1');
-    final duplicatedNumList = List<FavoriteTrivia>();
-    duplicatedNumList.add(favTriviaEntity1);
-    duplicatedNumList.add(favTriviaEntity2);
+    final tFavTriviaModel1 = NumberTriviaModel(number: 1, text: 'test trivia for 1');
+    final tFavTriviaModel2 = NumberTriviaModel(number: 1, text: 'another test trivia  for 1');
+    final tFavTriviaEntity1 = FavoriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia for 1');
+    final tFavTriviaEntity2 = FavoriteTrivia(id: 2, triviaNumber: 1, triviaText: 'another test trivia  for 1');
+    final tDuplicatedNumList = List<FavoriteTrivia>();
+    tDuplicatedNumList.add(tFavTriviaEntity1);
+    tDuplicatedNumList.add(tFavTriviaEntity2);
 
     test('should return trivia number back when adding it to Favorites', () async {
       //arrange
       when(dataSource.insertFavoriteNumberTrivia(any)).thenAnswer((_) async => tNumber);
       //act
-      final result = await dataSource.insertFavoriteNumberTrivia(dbTriviaModel);
+      final result = await dataSource.insertFavoriteNumberTrivia(tDBTriviaModel);
       //assert
-      verify(dao.insertFavoriteNumberTrivia(dbTriviaModel));
+      verify(dao.insertFavoriteNumberTrivia(tDBTriviaModel));
       expect(result, equals(tNumber));
     });
 
     test('should be able to store several favorite trivias with same numbers (but with different texts)', () async {
       //arrange
-      when(dataSource.getAllFavoriteNumberTrivias()).thenAnswer((_) async => duplicatedNumList);
+      when(dataSource.getAllFavoriteNumberTrivias()).thenAnswer((_) async => tDuplicatedNumList);
       //act
-      await dataSource.insertFavoriteNumberTrivia(favTriviaModel1);
-      await dataSource.insertFavoriteNumberTrivia(favTriviaModel2);
+      await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel1);
+      await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel2);
       final listResult = await dataSource.getAllFavoriteNumberTrivias();
       //assert
-      verify(dao.insertFavoriteNumberTrivia(favTriviaModel1));
-      verify(dao.insertFavoriteNumberTrivia(favTriviaModel2));
+      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel1));
+      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel2));
       verify(dao.getAllFavoriteNumberTrivias());
-      expect(eq(duplicatedNumList, listResult), true);
-      expect(listResult[0].triviaNumber, equals(duplicatedNumList[0].triviaNumber));
-      expect(listResult[1].triviaNumber, equals(duplicatedNumList[1].triviaNumber));
+      expect(eq(tDuplicatedNumList, listResult), true);
+      expect(listResult[0].triviaNumber, equals(tDuplicatedNumList[0].triviaNumber));
+      expect(listResult[1].triviaNumber, equals(tDuplicatedNumList[1].triviaNumber));
     });
   });
 
   group('deleteFromFavorites', () {
     final Function eq = const ListEquality().equals;
-    final dislikedTriviaModel = NumberTriviaModel(number: 1, text: 'test trivia');
-    final dislikedEntity = FavoriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia');
-    final favTriviaModel = NumberTriviaModel(number: 2, text: 'test trivia 2');
-    final favEntity = FavoriteTrivia(id: 2, triviaNumber: 2, triviaText: 'test trivia 2');
-    final resultList = List<FavoriteTrivia>();
-    resultList.add(favEntity);
-    resultList.add(dislikedEntity);
+    final tDislikedTriviaModel = NumberTriviaModel(number: 1, text: 'test trivia');
+    final tDislikedEntity = FavoriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia');
+    final tFavTriviaModel = NumberTriviaModel(number: 2, text: 'test trivia 2');
+    final tFavEntity = FavoriteTrivia(id: 2, triviaNumber: 2, triviaText: 'test trivia 2');
+    final tResultList = List<FavoriteTrivia>();
+    tResultList.add(tFavEntity);
 
     test('should not find trivia which was deleted from Favorites', () async {
       //arrange
-      when(dataSource.getAllFavoriteNumberTrivias()).thenAnswer((_) async => resultList);
+      when(dataSource.getAllFavoriteNumberTrivias()).thenAnswer((_) async => tResultList);
       when(dataSource.deleteFavoriteNumberTrivia(any)).thenAnswer((_) async => {});
       //act
-      await dataSource.insertFavoriteNumberTrivia(favTriviaModel);
-      await dataSource.insertFavoriteNumberTrivia(dislikedTriviaModel);
-      await dataSource.deleteFavoriteNumberTrivia(dislikedEntity);
+      await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel);
+      await dataSource.insertFavoriteNumberTrivia(tDislikedTriviaModel);
+      await dataSource.deleteFavoriteNumberTrivia(tDislikedEntity);
       final listResult = await dataSource.getAllFavoriteNumberTrivias();
       //assert
-      verify(dao.insertFavoriteNumberTrivia(favTriviaModel));
-      verify(dao.insertFavoriteNumberTrivia(dislikedTriviaModel));
-      verify(dao.deleteFavoriteNumberTrivia(dislikedEntity));
+      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel));
+      verify(dao.insertFavoriteNumberTrivia(tDislikedTriviaModel));
+      verify(dao.deleteFavoriteNumberTrivia(tDislikedEntity));
       verify(dao.getAllFavoriteNumberTrivias());
-      expect(eq(resultList, listResult), true);
+      expect(eq(tResultList, listResult), true);
     });
   });
 
   group('getAllFavorites', () {
     final Function eq = const ListEquality().equals;
-    final favTriviaModel1 = NumberTriviaModel(number: 1, text: 'test trivia');
-    final favTriviaModel2 = NumberTriviaModel(number: 2, text: 'test trivia 2');
-    final favTriviaEntity1 = FavoriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia');
-    final favTriviaEntity2 = FavoriteTrivia(id: 2, triviaNumber: 2, triviaText: 'test trivia 2');
-    final resultList = List<FavoriteTrivia>();
-    resultList.add(favTriviaEntity1);
-    resultList.add(favTriviaEntity2);
+    final tFavTriviaModel1 = NumberTriviaModel(number: 1, text: 'test trivia');
+    final tFavTriviaModel2 = NumberTriviaModel(number: 2, text: 'test trivia 2');
+    final tFavTriviaEntity1 = FavoriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia');
+    final tFavTriviaEntity2 = FavoriteTrivia(id: 2, triviaNumber: 2, triviaText: 'test trivia 2');
+    final tResultList = List<FavoriteTrivia>();
+    tResultList.add(tFavTriviaEntity1);
+    tResultList.add(tFavTriviaEntity2);
     final emptyResultList = List<FavoriteTrivia>();
 
-    test('should not find trivia which was deleted from Favorites', () async {
+    test('should contain the same data set when getting all fav trivias', () async {
       //arrange
-      when(dataSource.getAllFavoriteNumberTrivias()).thenAnswer((_) async => resultList);
+      when(dataSource.getAllFavoriteNumberTrivias()).thenAnswer((_) async => tResultList);
       //act
-      await dataSource.insertFavoriteNumberTrivia(favTriviaModel1);
-      await dataSource.insertFavoriteNumberTrivia(favTriviaModel2);
+      await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel1);
+      await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel2);
       final listResult = await dataSource.getAllFavoriteNumberTrivias();
       //assert
-      verify(dao.insertFavoriteNumberTrivia(favTriviaModel1));
-      verify(dao.insertFavoriteNumberTrivia(favTriviaModel2));
+      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel1));
+      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel2));
       verify(dao.getAllFavoriteNumberTrivias());
-      expect(eq(resultList, listResult), true);
+      expect(eq(tResultList, listResult), true);
     });
 
     test('should return empty list when no trivia was added to favorites', () async {

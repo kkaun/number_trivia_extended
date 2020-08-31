@@ -27,7 +27,7 @@ void main() {
       // the Right "side" of Either containing a test NumberTrivia object.
       //In 'dartz' library 'Right' means success object and 'Left' is a failure object
       when(mockNumberTriviaRepository.getConcreteNumberTrivia(any)).thenAnswer((_) async => Right(tNumberTrivia));
-      //ACT section:
+      // ACT section:
       // The "act" phase of the test. Call the not-yet-existent method.
       // Method 'execute' can be refactored to 'call': in that case we can just call '.. usecase(number: tNumber);'
       final result = await usecase.execute(NumberParams(number: tNumber));
