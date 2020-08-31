@@ -30,7 +30,7 @@ void main() {
       //ACT section:
       // The "act" phase of the test. Call the not-yet-existent method.
       // Method 'execute' can be refactored to 'call': in that case we can just call '.. usecase(number: tNumber);'
-      final result = await usecase.execute(Params(number: tNumber));
+      final result = await usecase.execute(NumberParams(number: tNumber));
       // ASSERT section:
       // UseCase should simply return whatever was returned from the Repository
       expect(result, Right(tNumberTrivia));

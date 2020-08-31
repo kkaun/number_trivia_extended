@@ -6,13 +6,13 @@ import 'package:numbers_trivia/features/number_trivia/domain/entities/number_tri
 import 'package:numbers_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/usecase.dart';
 
-class GetConcreteNumberTriviaUseCase implements UseCase<NumberTrivia, Params> {
+class GetConcreteNumberTriviaUseCase implements UseCase<NumberTrivia, NumberParams> {
   final NumberTriviaRepository repository;
 
   GetConcreteNumberTriviaUseCase(this.repository);
 
   @override
-  Future<Either<Failure, NumberTrivia>> execute(Params params) async {
+  Future<Either<Failure, NumberTrivia>> execute(NumberParams params) async {
     return await repository.getConcreteNumberTrivia(params.number);
   }
 }

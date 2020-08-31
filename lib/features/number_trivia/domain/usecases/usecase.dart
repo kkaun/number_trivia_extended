@@ -7,9 +7,9 @@ abstract class UseCase<Type, Params> {
   Future<Either<Failure, Type>> execute(Params params);
 }
 
-class Params extends Equatable {
+class NumberParams extends Equatable {
   final int number;
-  Params({
+  NumberParams({
     @required this.number,
   }) : super();
 

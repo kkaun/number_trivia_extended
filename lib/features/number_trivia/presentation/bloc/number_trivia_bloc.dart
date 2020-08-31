@@ -47,7 +47,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         // we still have to handle it somehow.
         (integer) async* {
           yield LoadingState();
-          final result = await getConcreteNumberTriviaUseCase.execute(Params(number: integer));
+          final result = await getConcreteNumberTriviaUseCase.execute(NumberParams(number: integer));
           yield* _getResultOfTriviaRequest(result);
         },
       );

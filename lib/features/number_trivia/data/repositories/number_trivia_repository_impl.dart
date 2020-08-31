@@ -58,12 +58,20 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   }
 
   @override
-  Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() async {
-    return await localDataSource.getAllFavoriteNumberTrivias();
+  Future<Either<Failure, List<FavoriteTrivia>>> getAllFavoriteNumberTrivias() async {
+    try {
+      return Right(await localDataSource.getAllFavoriteNumberTrivias());
+    } on Error {
+      return Left(CacheFailure());
+    }
   }
 
   @override
-  Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia) async {
-    return await localDataSource.deleteFavoriteNumberTrivia(trivia);
+  Future<Either<Failure, void>> deleteFavoriteNumberTrivia(FavoriteTrivia trivia) async {
+    try {
+      return Right(await localDataSource.deleteFavoriteNumberTrivia(trivia));
+    } on Error {
+      return Left(CacheFailure());
+    }
   }
 }

@@ -79,7 +79,7 @@ void main() {
       bloc.add(GetTriviaForConcreteNumberEvent(tNumberString));
       await untilCalled(mockGetConcreteNumberTriviaUseCase.execute(any));
       //assert
-      verify(mockGetConcreteNumberTriviaUseCase.execute(Params(number: tNumberParsed)));
+      verify(mockGetConcreteNumberTriviaUseCase.execute(NumberParams(number: tNumberParsed)));
     });
 
     test('should emit [Loading, Loaded] states when data is gotten successfully', () async {
