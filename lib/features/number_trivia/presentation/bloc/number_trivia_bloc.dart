@@ -4,12 +4,16 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:numbers_trivia/core/db/number_trivia_db.dart';
 import 'package:numbers_trivia/core/error/failures.dart';
 
 import 'package:numbers_trivia/core/util/input_converter.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/delete_fav_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_all_fav_trivias.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/insert_fav_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/usecase.dart';
 
 part 'number_trivia_event.dart';
@@ -18,14 +22,23 @@ part 'number_trivia_state.dart';
 class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   final GetConcreteNumberTriviaUseCase getConcreteNumberTriviaUseCase;
   final GetRandomNumberTriviaUseCase getRandomNumberTriviaUseCase;
+  final InsertFavoriteTriviaUseCase insertFavoriteTriviaUseCase;
+  final GetAllFavoriteTriviasUseCase getAllFavoriteTriviasUseCase;
+  final DeleteFavTriviaUseCase deleteFavTriviaUseCase;
   final InputConverter inputConverter;
 
   NumberTriviaBloc({
     @required this.getConcreteNumberTriviaUseCase,
     @required this.getRandomNumberTriviaUseCase,
+    @required this.insertFavoriteTriviaUseCase,
+    @required this.getAllFavoriteTriviasUseCase,
+    @required this.deleteFavTriviaUseCase,
     @required this.inputConverter,
   })  : assert(getConcreteNumberTriviaUseCase != null),
         assert(getRandomNumberTriviaUseCase != null),
+        assert(insertFavoriteTriviaUseCase != null),
+        assert(getAllFavoriteTriviasUseCase != null),
+        assert(deleteFavTriviaUseCase != null),
         assert(inputConverter != null),
         super(EmptyFieldState());
 
@@ -43,8 +56,6 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         (failure) async* {
           yield ErrorState(errorMessage: INVALID_INPUT_FAILURE_MESSAGE);
         },
-        // Although the "success case" doesn't interest us with the current test,
-        // we still have to handle it somehow.
         (integer) async* {
           yield LoadingState();
           final result = await getConcreteNumberTriviaUseCase.execute(NumberParams(number: integer));
@@ -55,6 +66,28 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       yield LoadingState();
       final result = await getRandomNumberTriviaUseCase.execute(NoParams());
       yield* _getResultOfTriviaRequest(result);
+    } else if (event is InsertFavoriteTriviaEvent) {
+      yield LoadingState();
+      final result = await insertFavoriteTriviaUseCase.execute(event.model);
+      yield* result.fold((failure) async* {
+        yield ErrorState(errorMessage: INSERT_FAVORITE_FAILURE_MESSAGE);
+      }, (number) async* {
+        yield InsertFavoriteTriviaState(number: number);
+      });
+    } else if (event is GetAllFavoriteTriviasEvent) {
+      final result = await getAllFavoriteTriviasUseCase.execute(NoParams());
+      yield* result.fold((failure) async* {
+        yield ErrorState(errorMessage: GET_ALL_FAVORITE_FAILURE_MESSAGE);
+      }, (trivias) async* {
+        yield GetAllFavoriteTrviasState(trivias);
+      });
+    } else if (event is DeleteFavoriteTriviaEvent) {
+      final result = await deleteFavTriviaUseCase.execute(event.trivia);
+      yield* result.fold((failure) async* {
+        yield ErrorState(errorMessage: DELETE_FAVORITE_FAILURE_MESSAGE);
+      }, (number) async* {
+        yield DeleteFavoriteTriviaState(number: event.trivia.triviaNumber);
+      });
     }
   }
 

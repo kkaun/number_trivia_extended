@@ -14,3 +14,17 @@ class GetTriviaForConcreteNumberEvent extends NumberTriviaEvent {
 }
 
 class GetTriviaForRandomNumberEvent extends NumberTriviaEvent {}
+
+class InsertFavoriteTriviaEvent extends NumberTriviaEvent {
+  final NumberTrivia model;
+
+  InsertFavoriteTriviaEvent(this.model) : super([model]);
+}
+
+class GetAllFavoriteTriviasEvent extends NumberTriviaEvent {}
+
+class DeleteFavoriteTriviaEvent extends NumberTriviaEvent {
+  final FavoriteTrivia trivia;
+
+  DeleteFavoriteTriviaEvent(this.trivia);
+}

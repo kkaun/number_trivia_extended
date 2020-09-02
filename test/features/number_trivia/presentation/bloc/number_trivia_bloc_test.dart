@@ -4,8 +4,11 @@ import 'package:mockito/mockito.dart';
 import 'package:numbers_trivia/core/error/failures.dart';
 import 'package:numbers_trivia/core/util/input_converter.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/delete_fav_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_all_fav_trivias.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/insert_fav_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/usecase.dart';
 import 'package:numbers_trivia/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 
@@ -13,22 +16,38 @@ class MockGetConcreteNumberTriviaUseCase extends Mock implements GetConcreteNumb
 
 class MockGetRandomNumberTriviaUseCase extends Mock implements GetRandomNumberTriviaUseCase {}
 
+class MockInsertFavoriteTriviaUseCase extends Mock implements InsertFavoriteTriviaUseCase {}
+
+class MockGetAllFavoriteTriviasUseCase extends Mock implements GetAllFavoriteTriviasUseCase {}
+
+class MockDeleteFavTriviaUseCase extends Mock implements DeleteFavTriviaUseCase {}
+
 class MockInputConverter extends Mock implements InputConverter {}
 
 void main() {
   NumberTriviaBloc bloc;
   MockGetConcreteNumberTriviaUseCase mockGetConcreteNumberTriviaUseCase;
   MockGetRandomNumberTriviaUseCase mockGetRandomNumberTriviaUseCase;
+  MockInsertFavoriteTriviaUseCase mockInsertFavoriteTriviaUseCase;
+  MockGetAllFavoriteTriviasUseCase mockGetAllFavoriteTriviasUseCase;
+  MockDeleteFavTriviaUseCase mockDeleteFavTriviaUseCase;
   MockInputConverter mockInputConverter;
 
   setUp(() {
     mockGetConcreteNumberTriviaUseCase = MockGetConcreteNumberTriviaUseCase();
     mockGetRandomNumberTriviaUseCase = MockGetRandomNumberTriviaUseCase();
+    mockInsertFavoriteTriviaUseCase = MockInsertFavoriteTriviaUseCase();
+    mockGetAllFavoriteTriviasUseCase = MockGetAllFavoriteTriviasUseCase();
+    mockDeleteFavTriviaUseCase = MockDeleteFavTriviaUseCase();
+
     mockInputConverter = MockInputConverter();
 
     bloc = NumberTriviaBloc(
       getConcreteNumberTriviaUseCase: mockGetConcreteNumberTriviaUseCase,
       getRandomNumberTriviaUseCase: mockGetRandomNumberTriviaUseCase,
+      insertFavoriteTriviaUseCase: mockInsertFavoriteTriviaUseCase,
+      getAllFavoriteTriviasUseCase: mockGetAllFavoriteTriviasUseCase,
+      deleteFavTriviaUseCase: mockDeleteFavTriviaUseCase,
       inputConverter: mockInputConverter,
     );
   });

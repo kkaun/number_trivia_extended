@@ -18,8 +18,9 @@ class NumberTriviaDao extends DatabaseAccessor<AppDatabase> with _$NumberTriviaD
 
   NumberTriviaDao(this.db) : super(db);
 
-  Future<int> insertFavoriteNumberTrivia(NumberTriviaModel model) {
-    final converted = FavoriteTrivia(id: null, triviaNumber: model.number, triviaText: model.text);
+  Future<int> insertFavoriteNumberTrivia(NumberTriviaModel model, [int testId]) {
+    final id = testId == null ? null : testId;
+    final converted = FavoriteTrivia(id: id, triviaNumber: model.number, triviaText: model.text);
     return into(favoriteTrivias).insert(converted);
   }
 

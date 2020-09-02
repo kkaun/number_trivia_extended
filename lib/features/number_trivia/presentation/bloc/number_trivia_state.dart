@@ -20,6 +20,33 @@ class LoadedState extends NumberTriviaState {
   List<Object> get props => [result];
 }
 
+class InsertFavoriteTriviaState extends NumberTriviaState {
+  final int number;
+
+  InsertFavoriteTriviaState({@required this.number}) : super([number]);
+
+  @override
+  List<Object> get props => [number];
+}
+
+class GetAllFavoriteTrviasState extends NumberTriviaState {
+  final List<FavoriteTrivia> trivias;
+
+  GetAllFavoriteTrviasState(this.trivias);
+
+  @override
+  List<Object> get props => [trivias];
+}
+
+class DeleteFavoriteTriviaState extends NumberTriviaState {
+  final int number;
+
+  DeleteFavoriteTriviaState({@required this.number}) : super([number]);
+
+  @override
+  List<Object> get props => [number];
+}
+
 class ErrorState extends NumberTriviaState {
   final String errorMessage;
 

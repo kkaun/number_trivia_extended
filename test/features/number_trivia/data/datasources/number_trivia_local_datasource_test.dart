@@ -106,6 +106,8 @@ void main() {
     final tDislikedEntity = FavoriteTrivia(id: 1, triviaNumber: 1, triviaText: 'test trivia');
     final tFavTriviaModel = NumberTriviaModel(number: 2, text: 'test trivia 2');
     final tFavEntity = FavoriteTrivia(id: 2, triviaNumber: 2, triviaText: 'test trivia 2');
+    final int tDislikedId = 1;
+    final int tFavId = 2;
     final tResultList = List<FavoriteTrivia>();
     tResultList.add(tFavEntity);
 
@@ -114,13 +116,13 @@ void main() {
       when(dataSource.getAllFavoriteNumberTrivias()).thenAnswer((_) async => tResultList);
       when(dataSource.deleteFavoriteNumberTrivia(any)).thenAnswer((_) async => {});
       //act
-      await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel);
-      await dataSource.insertFavoriteNumberTrivia(tDislikedTriviaModel);
+      await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel, tFavId);
+      await dataSource.insertFavoriteNumberTrivia(tDislikedTriviaModel, tDislikedId);
       await dataSource.deleteFavoriteNumberTrivia(tDislikedEntity);
       final listResult = await dataSource.getAllFavoriteNumberTrivias();
       //assert
-      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel));
-      verify(dao.insertFavoriteNumberTrivia(tDislikedTriviaModel));
+      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel, tFavId));
+      verify(dao.insertFavoriteNumberTrivia(tDislikedTriviaModel, tDislikedId));
       verify(dao.deleteFavoriteNumberTrivia(tDislikedEntity));
       verify(dao.getAllFavoriteNumberTrivias());
       expect(eq(tResultList, listResult), true);
