@@ -4,7 +4,7 @@ import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_concre
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/usecase.dart';
 import 'package:numbers_trivia/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
-
+import 'package:numbers_trivia/features/number_trivia/presentation/widgets/fav_trivia_controls.dart';
 import '../../../../injection_container.dart';
 
 class TriviaControls extends StatefulWidget {
@@ -24,18 +24,20 @@ class _TriviaControlsState extends State<TriviaControls> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextField(
-          controller: etController,
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          decoration: (InputDecoration(border: OutlineInputBorder(), hintText: 'Input a number')),
-          onChanged: (value) {
-            inputStr = value;
-          },
-          onSubmitted: (_) {
-            _dispatchTriviaButtonEventFor(serviceLocator<GetConcreteNumberTriviaUseCase>());
-          },
+        SizedBox(
+          height: 10,
         ),
+        TextField(
+            controller: etController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            decoration: (InputDecoration(border: OutlineInputBorder(), hintText: 'Input a number')),
+            onChanged: (value) {
+              inputStr = value;
+            },
+            onSubmitted: (_) {
+              _dispatchTriviaButtonEventFor(serviceLocator<GetConcreteNumberTriviaUseCase>());
+            }),
         SizedBox(
           height: 10,
         ),
@@ -71,7 +73,7 @@ class _TriviaControlsState extends State<TriviaControls> {
   }
 
   void _dispatchTriviaButtonEventFor(UseCase useCase) {
-    //! is this a linter issue?
+    //TODO is this a linter issue?
     // ignore: close_sinks
     final bloc = BlocProvider.of<NumberTriviaBloc>(context);
 

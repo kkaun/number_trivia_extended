@@ -61,9 +61,6 @@ void main() {
   });
 
   group('addToFavorites', () {
-    final tNumber = 1;
-    final tDBTriviaModel = NumberTriviaModel(number: tNumber, text: 'test trivia');
-
     final Function eq = const ListEquality().equals;
     final tFavTriviaModel1 = NumberTriviaModel(number: 1, text: 'test trivia for 1');
     final tFavTriviaModel2 = NumberTriviaModel(number: 1, text: 'another test trivia  for 1');
@@ -73,14 +70,14 @@ void main() {
     tDuplicatedNumList.add(tFavTriviaEntity1);
     tDuplicatedNumList.add(tFavTriviaEntity2);
 
-    test('should return trivia number back when adding it to Favorites', () async {
+    test('should return trivia back when adding it to Favorites', () async {
       //arrange
-      when(dataSource.insertFavoriteNumberTrivia(any)).thenAnswer((_) async => tNumber);
+      when(dataSource.insertFavoriteNumberTrivia(any)).thenAnswer((_) async => tFavTriviaModel1);
       //act
-      final result = await dataSource.insertFavoriteNumberTrivia(tDBTriviaModel);
+      final result = await dataSource.insertFavoriteNumberTrivia(tFavTriviaModel1);
       //assert
-      verify(dao.insertFavoriteNumberTrivia(tDBTriviaModel));
-      expect(result, equals(tNumber));
+      verify(dao.insertFavoriteNumberTrivia(tFavTriviaModel1));
+      expect(result, equals(tFavTriviaModel1));
     });
 
     test('should be able to store several favorite trivias with same numbers (but with different texts)', () async {

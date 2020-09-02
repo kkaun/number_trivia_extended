@@ -18,10 +18,11 @@ class NumberTriviaDao extends DatabaseAccessor<AppDatabase> with _$NumberTriviaD
 
   NumberTriviaDao(this.db) : super(db);
 
-  Future<int> insertFavoriteNumberTrivia(NumberTriviaModel model, [int testId]) {
+  Future<NumberTriviaModel> insertFavoriteNumberTrivia(NumberTriviaModel model, [int testId]) async {
     final id = testId == null ? null : testId;
     final converted = FavoriteTrivia(id: id, triviaNumber: model.number, triviaText: model.text);
-    return into(favoriteTrivias).insert(converted);
+    await into(favoriteTrivias).insert(converted);
+    return model;
   }
 
   Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() => select(favoriteTrivias).get();

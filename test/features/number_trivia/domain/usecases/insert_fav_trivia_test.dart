@@ -14,16 +14,16 @@ void main() {
     usecase = InsertFavoriteTriviaUseCase(mockNumberTriviaRepository);
   });
 
-  final tNumber = 1;
   final tNumberTrivia = NumberTrivia(number: 1, text: 'test');
 
   test('should retrieve number for favourite trivia which was recently inserted to repository', () async {
     //arrange
-    when(mockNumberTriviaRepository.insertFavoriteNumberTrivia(tNumberTrivia)).thenAnswer((_) async => Right(tNumber));
+    when(mockNumberTriviaRepository.insertFavoriteNumberTrivia(tNumberTrivia))
+        .thenAnswer((_) async => Right(tNumberTrivia));
     //act
     final result = await usecase.execute(tNumberTrivia);
     //assert
-    expect(result, Right(tNumber));
+    expect(result, Right(tNumberTrivia));
     verify(mockNumberTriviaRepository.insertFavoriteNumberTrivia(tNumberTrivia));
     verifyNoMoreInteractions(mockNumberTriviaRepository);
   });

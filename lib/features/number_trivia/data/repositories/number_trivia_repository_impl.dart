@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:moor_flutter/moor_flutter.dart';
 import 'package:numbers_trivia/core/db/number_trivia_db.dart';
 import 'package:numbers_trivia/core/error/exceptions.dart';
 import 'package:numbers_trivia/core/network/network_info.dart';
@@ -49,10 +50,10 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   }
 
   @override
-  Future<Either<Failure, int>> insertFavoriteNumberTrivia(NumberTrivia trivia) async {
+  Future<Either<Failure, NumberTrivia>> insertFavoriteNumberTrivia(NumberTrivia trivia) async {
     try {
       return Right(await localDataSource.insertFavoriteNumberTrivia(trivia));
-    } on Error {
+    } on InvalidDataException {
       return Left(CacheFailure());
     }
   }

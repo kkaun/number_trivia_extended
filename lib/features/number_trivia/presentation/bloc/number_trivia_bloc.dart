@@ -71,8 +71,8 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       final result = await insertFavoriteTriviaUseCase.execute(event.model);
       yield* result.fold((failure) async* {
         yield ErrorState(errorMessage: INSERT_FAVORITE_FAILURE_MESSAGE);
-      }, (number) async* {
-        yield InsertFavoriteTriviaState(number: number);
+      }, (trivia) async* {
+        yield InsertFavoriteTriviaState(trivia: trivia);
       });
     } else if (event is GetAllFavoriteTriviasEvent) {
       final result = await getAllFavoriteTriviasUseCase.execute(NoParams());
@@ -88,6 +88,8 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       }, (number) async* {
         yield DeleteFavoriteTriviaState(number: event.trivia.triviaNumber);
       });
+    } else {
+      yield EmptyFieldState();
     }
   }
 

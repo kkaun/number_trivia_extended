@@ -1,13 +1,18 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
+import 'package:numbers_trivia/core/db/number_trivia_db.dart';
 import 'package:numbers_trivia/core/network/network_info.dart';
 import 'package:numbers_trivia/core/util/input_converter.dart';
 import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_local_datasource.dart';
 import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_remote_datasource.dart';
 import 'package:numbers_trivia/features/number_trivia/data/repositories/number_trivia_repository_impl.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/delete_fav_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_all_fav_trivias.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/domain/usecases/insert_fav_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -22,11 +27,17 @@ Future<void> init() async {
   serviceLocator.registerFactory(() => NumberTriviaBloc(
       getConcreteNumberTriviaUseCase: serviceLocator(),
       getRandomNumberTriviaUseCase: serviceLocator(),
+      insertFavoriteTriviaUseCase: serviceLocator(),
+      getAllFavoriteTriviasUseCase: serviceLocator(),
+      deleteFavTriviaUseCase: serviceLocator(),
       inputConverter: serviceLocator()));
 
   //Use Cases:
   serviceLocator.registerLazySingleton(() => GetConcreteNumberTriviaUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => GetRandomNumberTriviaUseCase(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => InsertFavoriteTriviaUseCase(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => GetAllFavoriteTriviasUseCase(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => DeleteFavTriviaUseCase(serviceLocator()));
 
   //Repository:
   serviceLocator.registerLazySingleton<NumberTriviaRepository>(() => NumberTriviaRepositoryImpl(
@@ -37,7 +48,7 @@ Future<void> init() async {
       () => NumberTriviaRemoteDataSourceImpl(client: serviceLocator()));
 
   serviceLocator.registerLazySingleton<NumberTriviaLocalDataSource>(
-      () => NumberTriviaLocalDataSourceImpl(sharedPreferences: serviceLocator()));
+      () => NumberTriviaLocalDataSourceImpl(sharedPreferences: serviceLocator(), dao: serviceLocator()));
 
   //! Core
   serviceLocator.registerLazySingleton(() => InputConverter());
@@ -48,6 +59,9 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(() => sharedPreferences);
   serviceLocator.registerLazySingleton(() => http.Client());
   serviceLocator.registerLazySingleton(() => DataConnectionChecker());
+  //moor db
+  serviceLocator.registerLazySingleton(() => AppDatabase());
+  serviceLocator.registerLazySingleton(() => NumberTriviaDao(serviceLocator()));
 }
 
 //* We're registering dependencies respectively in order by going down our clean architecture invocation chain.

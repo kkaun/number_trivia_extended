@@ -6,13 +6,13 @@ import 'package:numbers_trivia/features/number_trivia/domain/entities/number_tri
 import 'package:numbers_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/usecase.dart';
 
-class InsertFavoriteTriviaUseCase implements UseCase<int, NumberTrivia> {
+class InsertFavoriteTriviaUseCase implements UseCase<NumberTrivia, NumberTrivia> {
   final NumberTriviaRepository repository;
 
   InsertFavoriteTriviaUseCase(this.repository);
 
   @override
-  Future<Either<Failure, int>> execute(NumberTrivia model) {
+  Future<Either<Failure, NumberTrivia>> execute(NumberTrivia model) {
     return repository.insertFavoriteNumberTrivia(model);
   }
 }

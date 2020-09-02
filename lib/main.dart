@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:numbers_trivia/features/number_trivia/presentation/pages/number_trivia_page.dart';
 import 'injection_container.dart' as dependencyInjector;
 

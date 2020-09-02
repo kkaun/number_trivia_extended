@@ -1,6 +1,6 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/entities/number_trivia.dart';
+import 'package:numbers_trivia/features/number_trivia/presentation/widgets/fav_trivia_controls.dart';
 
 class TriviaDisplay extends StatelessWidget {
   final NumberTrivia trivia;
@@ -9,12 +9,12 @@ class TriviaDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //1/3 size of the whole screen:
-      height: MediaQuery.of(context).size.height / 3,
-      child: Column(
-        children: [
-          Stack(
+    return Column(
+      children: [
+        Container(
+          //1/3 size of the whole screen:
+          height: MediaQuery.of(context).size.height / 3,
+          child: Column(
             children: [
               Align(
                 alignment: Alignment.center,
@@ -27,42 +27,29 @@ class TriviaDisplay extends StatelessWidget {
                   ),
                 ),
               ),
-              Visibility(
-                visible: true,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: FloatingActionButton(
-                        child: Icon(Icons.add),
-                        onPressed: () {
-                          //TODO
-                        }),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text(
+                          trivia.text,
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      trivia.text,
-                      style: TextStyle(fontSize: 22),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+        FavoriteTriviaControls(trivia: trivia),
+      ],
     );
   }
 }

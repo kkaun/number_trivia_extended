@@ -14,7 +14,7 @@ abstract class NumberTriviaLocalDataSource {
 
   //For local DB cache
   Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias();
-  Future<int> insertFavoriteNumberTrivia(NumberTriviaModel trivia, [int testId]);
+  Future<NumberTriviaModel> insertFavoriteNumberTrivia(NumberTriviaModel trivia, [int testId]);
   Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia);
   Future<FavoriteTrivia> getByDBId(int dbId);
 }
@@ -42,7 +42,7 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   }
 
   @override
-  Future<int> insertFavoriteNumberTrivia(NumberTriviaModel model, [int testId]) {
+  Future<NumberTriviaModel> insertFavoriteNumberTrivia(NumberTriviaModel model, [int testId]) {
     if (testId == null) {
       return dao.insertFavoriteNumberTrivia(model);
     } else {

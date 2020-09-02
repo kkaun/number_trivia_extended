@@ -21,12 +21,12 @@ class LoadedState extends NumberTriviaState {
 }
 
 class InsertFavoriteTriviaState extends NumberTriviaState {
-  final int number;
+  final NumberTrivia trivia;
 
-  InsertFavoriteTriviaState({@required this.number}) : super([number]);
+  InsertFavoriteTriviaState({@required this.trivia}) : super([trivia]);
 
   @override
-  List<Object> get props => [number];
+  List<Object> get props => [trivia];
 }
 
 class GetAllFavoriteTrviasState extends NumberTriviaState {
