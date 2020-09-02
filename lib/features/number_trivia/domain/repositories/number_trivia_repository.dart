@@ -7,7 +7,7 @@ abstract class NumberTriviaRepository {
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int number);
   Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia();
 
-  Future<Either<Failure, List<FavoriteTrivia>>> getAllFavoriteNumberTrivias();
+  Future<Either<Failure, Stream<List<FavoriteTrivia>>>> observeAllFavoriteNumberTrivias();
   Future<Either<Failure, NumberTrivia>> insertFavoriteNumberTrivia(NumberTrivia trivia);
   Future<Either<Failure, void>> deleteFavoriteNumberTrivia(FavoriteTrivia trivia);
 }

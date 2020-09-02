@@ -28,7 +28,7 @@ Future<void> init() async {
       getConcreteNumberTriviaUseCase: serviceLocator(),
       getRandomNumberTriviaUseCase: serviceLocator(),
       insertFavoriteTriviaUseCase: serviceLocator(),
-      getAllFavoriteTriviasUseCase: serviceLocator(),
+      observeAllFavoriteTriviasUseCase: serviceLocator(),
       deleteFavTriviaUseCase: serviceLocator(),
       inputConverter: serviceLocator()));
 
@@ -36,7 +36,7 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(() => GetConcreteNumberTriviaUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => GetRandomNumberTriviaUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => InsertFavoriteTriviaUseCase(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => GetAllFavoriteTriviasUseCase(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => ObserveAllFavoriteTriviasUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => DeleteFavTriviaUseCase(serviceLocator()));
 
   //Repository:

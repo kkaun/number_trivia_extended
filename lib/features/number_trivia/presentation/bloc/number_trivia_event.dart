@@ -21,7 +21,7 @@ class InsertFavoriteTriviaEvent extends NumberTriviaEvent {
   InsertFavoriteTriviaEvent(this.model) : super([model]);
 }
 
-class GetAllFavoriteTriviasEvent extends NumberTriviaEvent {}
+class ObserveAllFavoriteTriviasEvent extends NumberTriviaEvent {}
 
 class DeleteFavoriteTriviaEvent extends NumberTriviaEvent {
   final FavoriteTrivia trivia;

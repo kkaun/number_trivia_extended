@@ -13,6 +13,7 @@ abstract class NumberTriviaLocalDataSource {
   Future<void> cacheNumberTrivia(NumberTriviaModel model);
 
   //For local DB cache
+  Stream<List<FavoriteTrivia>> observeAllFavoriteNumberTrivias();
   Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias();
   Future<NumberTriviaModel> insertFavoriteNumberTrivia(NumberTriviaModel trivia, [int testId]);
   Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia);
@@ -56,12 +57,17 @@ class NumberTriviaLocalDataSourceImpl implements NumberTriviaLocalDataSource {
   }
 
   @override
-  Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() {
-    return dao.getAllFavoriteNumberTrivias();
+  Stream<List<FavoriteTrivia>> observeAllFavoriteNumberTrivias() {
+    return dao.observeAllFavoriteNumberTrivias();
   }
 
   @override
   Future<FavoriteTrivia> getByDBId(int dbId) {
     return dao.getById(dbId);
+  }
+
+  @override
+  Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() {
+    return dao.getAllFavoriteNumberTrivias();
   }
 }

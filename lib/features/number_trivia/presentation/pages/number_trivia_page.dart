@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numbers_trivia/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'package:numbers_trivia/features/number_trivia/presentation/pages/favorite_trivias_page.dart';
 import 'package:numbers_trivia/features/number_trivia/presentation/widgets/number_trivia_widgets.dart';
 import 'package:numbers_trivia/injection_container.dart';
 
@@ -14,6 +15,17 @@ class NumberTriviaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Number Trivia'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.star,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _navigateToFavoritesScreen(context);
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(child: buildBody(context)),
     );
@@ -60,5 +72,9 @@ class NumberTriviaPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _navigateToFavoritesScreen(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavoriteTrviasPage()));
   }
 }

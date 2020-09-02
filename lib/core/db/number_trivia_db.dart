@@ -25,7 +25,9 @@ class NumberTriviaDao extends DatabaseAccessor<AppDatabase> with _$NumberTriviaD
     return model;
   }
 
+  Stream<List<FavoriteTrivia>> observeAllFavoriteNumberTrivias() => select(favoriteTrivias).watch();
   Future<List<FavoriteTrivia>> getAllFavoriteNumberTrivias() => select(favoriteTrivias).get();
+
   Future deleteFavoriteNumberTrivia(FavoriteTrivia trivia) => delete(favoriteTrivias).delete(trivia);
 
   Future<FavoriteTrivia> getById(int id) {

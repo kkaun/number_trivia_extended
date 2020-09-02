@@ -59,9 +59,9 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   }
 
   @override
-  Future<Either<Failure, List<FavoriteTrivia>>> getAllFavoriteNumberTrivias() async {
+  Future<Either<Failure, Stream<List<FavoriteTrivia>>>> observeAllFavoriteNumberTrivias() async {
     try {
-      return Right(await localDataSource.getAllFavoriteNumberTrivias());
+      return Right(localDataSource.observeAllFavoriteNumberTrivias());
     } on Error {
       return Left(CacheFailure());
     }

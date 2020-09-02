@@ -23,7 +23,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   final GetConcreteNumberTriviaUseCase getConcreteNumberTriviaUseCase;
   final GetRandomNumberTriviaUseCase getRandomNumberTriviaUseCase;
   final InsertFavoriteTriviaUseCase insertFavoriteTriviaUseCase;
-  final GetAllFavoriteTriviasUseCase getAllFavoriteTriviasUseCase;
+  final ObserveAllFavoriteTriviasUseCase observeAllFavoriteTriviasUseCase;
   final DeleteFavTriviaUseCase deleteFavTriviaUseCase;
   final InputConverter inputConverter;
 
@@ -31,13 +31,13 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     @required this.getConcreteNumberTriviaUseCase,
     @required this.getRandomNumberTriviaUseCase,
     @required this.insertFavoriteTriviaUseCase,
-    @required this.getAllFavoriteTriviasUseCase,
+    @required this.observeAllFavoriteTriviasUseCase,
     @required this.deleteFavTriviaUseCase,
     @required this.inputConverter,
   })  : assert(getConcreteNumberTriviaUseCase != null),
         assert(getRandomNumberTriviaUseCase != null),
         assert(insertFavoriteTriviaUseCase != null),
-        assert(getAllFavoriteTriviasUseCase != null),
+        assert(observeAllFavoriteTriviasUseCase != null),
         assert(deleteFavTriviaUseCase != null),
         assert(inputConverter != null),
         super(EmptyFieldState());
@@ -74,12 +74,12 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       }, (trivia) async* {
         yield InsertFavoriteTriviaState(trivia: trivia);
       });
-    } else if (event is GetAllFavoriteTriviasEvent) {
-      final result = await getAllFavoriteTriviasUseCase.execute(NoParams());
+    } else if (event is ObserveAllFavoriteTriviasEvent) {
+      final result = await observeAllFavoriteTriviasUseCase.execute(NoParams());
       yield* result.fold((failure) async* {
         yield ErrorState(errorMessage: GET_ALL_FAVORITE_FAILURE_MESSAGE);
       }, (trivias) async* {
-        yield GetAllFavoriteTrviasState(trivias);
+        yield ObserveAllFavoriteTrviasState(trivias);
       });
     } else if (event is DeleteFavoriteTriviaEvent) {
       final result = await deleteFavTriviaUseCase.execute(event.trivia);

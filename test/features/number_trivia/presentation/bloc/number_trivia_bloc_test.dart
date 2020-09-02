@@ -18,7 +18,7 @@ class MockGetRandomNumberTriviaUseCase extends Mock implements GetRandomNumberTr
 
 class MockInsertFavoriteTriviaUseCase extends Mock implements InsertFavoriteTriviaUseCase {}
 
-class MockGetAllFavoriteTriviasUseCase extends Mock implements GetAllFavoriteTriviasUseCase {}
+class MockGetAllFavoriteTriviasUseCase extends Mock implements ObserveAllFavoriteTriviasUseCase {}
 
 class MockDeleteFavTriviaUseCase extends Mock implements DeleteFavTriviaUseCase {}
 
@@ -46,7 +46,7 @@ void main() {
       getConcreteNumberTriviaUseCase: mockGetConcreteNumberTriviaUseCase,
       getRandomNumberTriviaUseCase: mockGetRandomNumberTriviaUseCase,
       insertFavoriteTriviaUseCase: mockInsertFavoriteTriviaUseCase,
-      getAllFavoriteTriviasUseCase: mockGetAllFavoriteTriviasUseCase,
+      observeAllFavoriteTriviasUseCase: mockGetAllFavoriteTriviasUseCase,
       deleteFavTriviaUseCase: mockDeleteFavTriviaUseCase,
       inputConverter: mockInputConverter,
     );

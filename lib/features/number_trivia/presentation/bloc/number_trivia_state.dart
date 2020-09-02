@@ -29,13 +29,13 @@ class InsertFavoriteTriviaState extends NumberTriviaState {
   List<Object> get props => [trivia];
 }
 
-class GetAllFavoriteTrviasState extends NumberTriviaState {
-  final List<FavoriteTrivia> trivias;
+class ObserveAllFavoriteTrviasState extends NumberTriviaState {
+  final Stream<List<FavoriteTrivia>> favTriviaStream;
 
-  GetAllFavoriteTrviasState(this.trivias);
+  ObserveAllFavoriteTrviasState(this.favTriviaStream);
 
   @override
-  List<Object> get props => [trivias];
+  List<Object> get props => [favTriviaStream];
 }
 
 class DeleteFavoriteTriviaState extends NumberTriviaState {
