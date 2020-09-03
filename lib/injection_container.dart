@@ -1,5 +1,4 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:numbers_trivia/core/db/number_trivia_db.dart';
 import 'package:numbers_trivia/core/network/network_info.dart';
@@ -8,7 +7,6 @@ import 'package:numbers_trivia/features/number_trivia/data/datasources/number_tr
 import 'package:numbers_trivia/features/number_trivia/data/datasources/number_trivia_remote_datasource.dart';
 import 'package:numbers_trivia/features/number_trivia/data/repositories/number_trivia_repository_impl.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
-import 'package:numbers_trivia/features/number_trivia/domain/usecases/delete_fav_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_all_fav_trivias.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
@@ -29,7 +27,6 @@ Future<void> init() async {
       getRandomNumberTriviaUseCase: serviceLocator(),
       insertFavoriteTriviaUseCase: serviceLocator(),
       observeAllFavoriteTriviasUseCase: serviceLocator(),
-      deleteFavTriviaUseCase: serviceLocator(),
       inputConverter: serviceLocator()));
 
   //Use Cases:
@@ -37,7 +34,6 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton(() => GetRandomNumberTriviaUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => InsertFavoriteTriviaUseCase(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ObserveAllFavoriteTriviasUseCase(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => DeleteFavTriviaUseCase(serviceLocator()));
 
   //Repository:
   serviceLocator.registerLazySingleton<NumberTriviaRepository>(() => NumberTriviaRepositoryImpl(

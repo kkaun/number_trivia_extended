@@ -38,15 +38,6 @@ class ObserveAllFavoriteTrviasState extends NumberTriviaState {
   List<Object> get props => [favTriviaStream];
 }
 
-class DeleteFavoriteTriviaState extends NumberTriviaState {
-  final int number;
-
-  DeleteFavoriteTriviaState({@required this.number}) : super([number]);
-
-  @override
-  List<Object> get props => [number];
-}
-
 class ErrorState extends NumberTriviaState {
   final String errorMessage;
 

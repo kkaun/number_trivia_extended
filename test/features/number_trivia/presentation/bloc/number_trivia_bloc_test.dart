@@ -4,7 +4,6 @@ import 'package:mockito/mockito.dart';
 import 'package:numbers_trivia/core/error/failures.dart';
 import 'package:numbers_trivia/core/util/input_converter.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/entities/number_trivia.dart';
-import 'package:numbers_trivia/features/number_trivia/domain/usecases/delete_fav_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_all_fav_trivias.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
@@ -20,8 +19,6 @@ class MockInsertFavoriteTriviaUseCase extends Mock implements InsertFavoriteTriv
 
 class MockGetAllFavoriteTriviasUseCase extends Mock implements ObserveAllFavoriteTriviasUseCase {}
 
-class MockDeleteFavTriviaUseCase extends Mock implements DeleteFavTriviaUseCase {}
-
 class MockInputConverter extends Mock implements InputConverter {}
 
 void main() {
@@ -30,7 +27,6 @@ void main() {
   MockGetRandomNumberTriviaUseCase mockGetRandomNumberTriviaUseCase;
   MockInsertFavoriteTriviaUseCase mockInsertFavoriteTriviaUseCase;
   MockGetAllFavoriteTriviasUseCase mockGetAllFavoriteTriviasUseCase;
-  MockDeleteFavTriviaUseCase mockDeleteFavTriviaUseCase;
   MockInputConverter mockInputConverter;
 
   setUp(() {
@@ -38,7 +34,6 @@ void main() {
     mockGetRandomNumberTriviaUseCase = MockGetRandomNumberTriviaUseCase();
     mockInsertFavoriteTriviaUseCase = MockInsertFavoriteTriviaUseCase();
     mockGetAllFavoriteTriviasUseCase = MockGetAllFavoriteTriviasUseCase();
-    mockDeleteFavTriviaUseCase = MockDeleteFavTriviaUseCase();
 
     mockInputConverter = MockInputConverter();
 
@@ -47,7 +42,6 @@ void main() {
       getRandomNumberTriviaUseCase: mockGetRandomNumberTriviaUseCase,
       insertFavoriteTriviaUseCase: mockInsertFavoriteTriviaUseCase,
       observeAllFavoriteTriviasUseCase: mockGetAllFavoriteTriviasUseCase,
-      deleteFavTriviaUseCase: mockDeleteFavTriviaUseCase,
       inputConverter: mockInputConverter,
     );
   });

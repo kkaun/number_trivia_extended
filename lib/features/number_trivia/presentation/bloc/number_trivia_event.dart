@@ -22,9 +22,3 @@ class InsertFavoriteTriviaEvent extends NumberTriviaEvent {
 }
 
 class ObserveAllFavoriteTriviasEvent extends NumberTriviaEvent {}
-
-class DeleteFavoriteTriviaEvent extends NumberTriviaEvent {
-  final FavoriteTrivia trivia;
-
-  DeleteFavoriteTriviaEvent(this.trivia);
-}

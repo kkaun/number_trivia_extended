@@ -9,7 +9,6 @@ import 'package:numbers_trivia/core/error/failures.dart';
 
 import 'package:numbers_trivia/core/util/input_converter.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/entities/number_trivia.dart';
-import 'package:numbers_trivia/features/number_trivia/domain/usecases/delete_fav_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_all_fav_trivias.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
@@ -24,7 +23,6 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   final GetRandomNumberTriviaUseCase getRandomNumberTriviaUseCase;
   final InsertFavoriteTriviaUseCase insertFavoriteTriviaUseCase;
   final ObserveAllFavoriteTriviasUseCase observeAllFavoriteTriviasUseCase;
-  final DeleteFavTriviaUseCase deleteFavTriviaUseCase;
   final InputConverter inputConverter;
 
   NumberTriviaBloc({
@@ -32,13 +30,11 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     @required this.getRandomNumberTriviaUseCase,
     @required this.insertFavoriteTriviaUseCase,
     @required this.observeAllFavoriteTriviasUseCase,
-    @required this.deleteFavTriviaUseCase,
     @required this.inputConverter,
   })  : assert(getConcreteNumberTriviaUseCase != null),
         assert(getRandomNumberTriviaUseCase != null),
         assert(insertFavoriteTriviaUseCase != null),
         assert(observeAllFavoriteTriviasUseCase != null),
-        assert(deleteFavTriviaUseCase != null),
         assert(inputConverter != null),
         super(EmptyFieldState());
 
@@ -80,13 +76,6 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         yield ErrorState(errorMessage: GET_ALL_FAVORITE_FAILURE_MESSAGE);
       }, (trivias) async* {
         yield ObserveAllFavoriteTrviasState(trivias);
-      });
-    } else if (event is DeleteFavoriteTriviaEvent) {
-      final result = await deleteFavTriviaUseCase.execute(event.trivia);
-      yield* result.fold((failure) async* {
-        yield ErrorState(errorMessage: DELETE_FAVORITE_FAILURE_MESSAGE);
-      }, (number) async* {
-        yield DeleteFavoriteTriviaState(number: event.trivia.triviaNumber);
       });
     } else {
       yield EmptyFieldState();

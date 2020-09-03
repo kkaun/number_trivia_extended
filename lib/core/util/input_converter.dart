@@ -7,6 +7,8 @@ class InputConverter {
       int parsedNumber = int.parse(str);
       if (parsedNumber.isNegative) return Left(InvalidInputFailure());
       return Right(parsedNumber);
+    } on ArgumentError {
+      return Left(InvalidInputFailure());
     } on FormatException {
       return Left(InvalidInputFailure());
     }

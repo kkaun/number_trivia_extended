@@ -4,13 +4,13 @@ import 'package:numbers_trivia/core/error/failures.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:numbers_trivia/features/number_trivia/domain/usecases/usecase.dart';
 
-class DeleteFavTriviaUseCase implements UseCase<int, FavoriteTrivia> {
-  final NumberTriviaRepository repository;
+// class DeleteFavTriviaUseCase implements UseCase<void, FavoriteTrivia> {
+//   final NumberTriviaRepository repository;
 
-  DeleteFavTriviaUseCase(this.repository);
+//   DeleteFavTriviaUseCase(this.repository);
 
-  @override
-  Future<Either<Failure, int>> execute(FavoriteTrivia trivia) async {
-    return await repository.deleteFavoriteNumberTrivia(trivia);
-  }
-}
+//   @override
+//   Future<Either<Failure, void>> execute(FavoriteTrivia trivia) async {
+//     return await repository.deleteFavoriteNumberTrivia(trivia);
+//   }
+// }
